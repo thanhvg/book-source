@@ -1,7 +1,7 @@
 (ns joy.chess)
 
 (defn initial-board []
-  [\r \n \b \q \k \b \n \r       
+  [\r \n \b \q \k \b \n \r
    \p \p \p \p \p \p \p \p
    \- \- \- \- \- \- \- \-
    \- \- \- \- \- \- \- \-
@@ -31,3 +31,24 @@
 
 ;; (lookup (initial-board) "a8")
 ;;=> \r
+
+(letfn [(index [file rank]
+          (let [f (- (int file) (int \a))
+                r (* 8 (- 8 (- (int rank) (int \0))))]
+            (+ f r)))]
+  (defn lookup2 [board pos]
+    (let [[file rank] pos]
+      (board (index file rank)))))
+
+(lookup2 (initial-board) "a1")
+;;=> \R
+
+(defn lookup3 [board pos]
+  (let [[file rank] (map int pos)
+        [fc rc] (map int [\a \0])
+        f (- file fc)
+        r (* 8 (- 8 (- rank rc)))
+        index (+ f r)]
+    (board index)))
+(lookup3 (initial-board) "a1")
+;;=> \R

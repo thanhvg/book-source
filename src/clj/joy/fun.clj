@@ -29,3 +29,9 @@
   (draw-values + 256 256)
   (draw-values * 256 256)
 )
+
+(doseq [[x y xor] (xors 200 200)]
+  (.setColor gfx (java.awt.Color. xor xor xor))
+  (.fillRect gfx x y 1 1))
+
+;; (.dispose frame)
